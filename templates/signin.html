@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <div class="w3-row w3-padding-small">
+            <div class="w3-col m10">
+                <div style="margin-left:25%; margin-right:25%;">
+                    <h2 class="w3-text-red w3-center">{{message}}</h2>
+                    <div class="w3-white w3-margin w3-padding-large">
+                        <div class="w3-container w3-blue w3-center">
+                            <h2>Signin</h2>
+                        </div>
+                        <br>
+                        <form class="w3-container" method="post">
+                            <label class="w3-text-blue"><b>Username</b></label>
+                            <input class="w3-input" type="text" name="username" value="">
+                            <p class="w3-text-red">{{error_username}}</p>
+
+                            <label class="w3-text-blue"><b>Password</b></label>
+                            <input class="w3-input" type="password" name="password" value="">
+                            <br>
+                            <input type="submit" class="w3-btn w3-blue" value="Signin">
+                            <p class="w3-text-red">{{error_signin}}</p>
+                        </form>
+                        <h4>Not signedup yet? Please<a href="/signup"> Signup </a></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="w3-col m2 w3-center">
+                <div class="w3-white w3-margin">
+                    <img src="/static/img/card.jpg" alt="Prashant" style="width:100%" class="w3-grayscale">
+                    <div class="w3-container">
+                        <h4>Prashant Joshi</h4>
+                        <p>Well this is my first web application developed using google-app-engine. Feel free to use it.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

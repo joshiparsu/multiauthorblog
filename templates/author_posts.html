@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+        
+        {% if message != "" %}
+		<div class="w3-row w3-padding-small">
+        	<div class="w3-col m12 w3-center w3-red">
+                <h1>{{message}}</h1>
+            </div>
+        </div>
+        {% endif %}
+        {% for post in posts %}
+            <div class="w3-row">
+                <div class="w3-col m12 w3-center w3-padding-xxlarge">
+                    <div class="w3-container w3-white w3-padding-xsmall post-detail w3-blue">
+                        <div class="w3-center">
+                            <h3 class="w3-blue">
+                                Posted by <b>{{post.author}}</b>
+                                <span class="w3-opacity">|</span>
+                                <a href="postdetail/{{post.key().id()}}" class="w3-hover-text-red">{{post.subject}}</a>
+                                <span class="w3-opacity">|</span>
+                                {{post.last_modified.strftime("%b %d, %Y")}}
+                            </h3>
+                        </div>
+
+                        <div class="w3-center">
+                            <img src="{{post.image_path}}" alt="{{post.subject}}" width="550" height="309" class="w3-padding-16">
+                            <div class="w3-left-align">
+                                <p style="display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient: vertical; overflow: hidden;text-overflow: ellipsis;">
+                                    <i class="fa fa-quote-left fa-2x fa-border w3-blue"></i>
+                                    {{post.content}}
+                                </p>
+                                <a href="postdetail/{{post.key().id()}}"> Read More</a>
+                            </div>
+                            <p class="w3-clear"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+s
+{% endblock %}

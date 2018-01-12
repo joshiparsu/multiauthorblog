@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+        <div class="w3-row w3-padding-small">
+            <div class="w3-col m10 w3-center">
+                <div class="w3-container w3-white w3-margin">
+                    <div class="w3-center">
+                        <h3 class="w3-blue">
+                            Posted by <b>{{post.author}}</b>
+                            <span class="w3-opacity">|</span>
+                            {{post.subject}}
+                            <span class="w3-opacity">|</span>
+                            {{post.last_modified.strftime("%b %d, %Y")}}
+                        </h3>
+                    </div>
+
+                    <div class="w3-center">
+                        <img src="{{post.image_path}}" alt="{{post.subject}}" width="550" height="309" class="w3-padding-16">
+                        <div class="w3-left-align">
+                            <p>
+                                <i class="fa fa-quote-left fa-1x fa-border w3-blue"></i>
+                                {{post.content}}
+                            </p>
+                            {% if post.author == username %}
+                            <div class="w3-padding-small w3-left-align w3-text-blue" style="width:30%">
+                                <table class="w3-table w3-centered" style="table-layout: fixed;">
+                                    <tr>
+                                        <td style="vertical-align:middle" class="w3-round w3-border w3-border-blue">
+                                            <span class="w3-padding-xsmall">
+                                                <form action="/postdetail/{{post.key().id()}}/editpost" method="get" id="edit-post">
+                                                    Modify Post <label class="fa fa-edit w3-hover-opacity w3-xlarge" style="color:blue" onClick="document.getElementById('edit-post').submit();" onmouseover="this.style.cursor='pointer';"></label>
+                                                </form>
+                                            </span>
+                                        </td>
+                                        <td style="vertical-align:middle" class="w3-round w3-border w3-border-blue">
+                                            <span class="w3-padding-xsmall">
+                                                Delete Post <label class="fa fa-remove w3-hover-opacity w3-xlarge" style="color:red" onclick="document.getElementById('id01').style.display='block'" onmouseover="this.style.cursor='pointer';"></label>
+                                            </span>
+                                            <div id="id01" class="w3-modal">
+                                                <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:400px">
+                                                    <div class="w3-blue">
+                                                        <br>
+                                                        <i class="fa fa-warning w3-display-topleft w3-yellow w3-xlarge"></i>
+                                                        <span onclick="document.getElementById('id01').style.display='none'" class="w3-medium w3-hover-red w3-display-topright">
+                                                            <i class="fa fa-close w3-xlarge"></i>
+                                                        </span>
+                                                    </div>
+                                                    <form class="w3-container" method="post" action="/postdetail/{{post.key().id()}}/deletepost">
+                                                        <div class="w3-section w3-center">
+                                                            <label><b>Are you sure you want to delete this post?</b></label>
+                                                            <input type="submit" class="w3-button w3-blue w3-section w3-padding" value="Yes">
+                                                            <label class="w3-btn w3-blue w3-section w3-padding" onclick="document.getElementById('id01').style.display='none'">No</label>
+                                                            <input type="hidden" name="postid" value="{{post.key().id()}}">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            {% endif %}
+
+                            <div class="w3-padding-small w3-left-align w3-text-blue" style="width:100%">
+                                <table class="w3-table w3-centered" style="table-layout: fixed;">
+                                    <tr>
+                                        {% if username != "" and post.author != username %}
+                                        <td class="w3-hover-shadow w3-round w3-border w3-border-blue" style="vertical-align:middle;" onmouseover="this.style.cursor='pointer';" width="33%">
+                                            {% if liked_post == True %}
+                                            <form action="/postdetail/{{post.key().id()}}/unlikepost" method="post" id="unlike-post">
+                                                <span class="w3-padding">
+                                                    <label onmouseover="this.style.cursor='pointer';" onClick="document.getElementById('like-img').classList.toggle('w3-text-blue'); document.getElementById('unlike-post').submit();">
+                                                        Liked <i id="like-img" class="fa fa-thumbs-up w3-text-blue w3-large"></i>
+                                                    </label>
+                                                </span>
+                                            </form>
+                                            {% else %}
+                                            <form action="/postdetail/{{post.key().id()}}/likepost" method="post" id="like-post">
+                                                <span class="w3-padding">
+                                                    <label onmouseover="this.style.cursor='pointer';" onClick="document.getElementById('like-img').classList.toggle('w3-text-gray'); document.getElementById('like-post').submit();">
+                                                        Like <i id="like-img" class="fa fa-thumbs-up w3-text-gray w3-large"></i>
+                                                    </label>
+                                                </span>
+                                            </form>
+                                            {% endif %}
+                                        </td>
+                                        {% endif %}
+                                        <td class="w3-hover-shadow w3-round w3-border w3-border-blue" style="vertical-align:middle">
+                                            <span class="w3-padding">
+                                                <a href="http://www.facebook.com/sharer.php" style="text-decoration: none;" target="_blank">Share on <i class="fa fa-facebook-official w3-large"></i></a>
+                                            </span>
+                                            <span class="w3-padding">
+                                                <a href="https://twitter.com/share" style="text-decoration: none;" target="_blank"> <i class="fa fa-twitter w3-large"></i></a>
+                                            </span>
+                                            <span class="w3-padding">
+                                                <a href="https://plus.google.com/share" style="text-decoration: none;" target="_blank"> <i class="fa fa-google-plus-square w3-large"></i></a>
+                                            </span>
+                                        </td>
+                                        <td class="w3-hover-shadow w3-round w3-border w3-border-blue" style="vertical-align:middle;">
+                                            Total <b>{{post.no_of_comments}}</b> Comment(s)
+                                        </td>
+                                        <td class="w3-hover-shadow w3-round w3-border w3-border-blue" style="vertical-align:middle;">
+                                            Total <b>{{post.no_of_likes}}</b> Like(s)
+                                        </td>
+                                    </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="w3-col m2 w3-center">
+                <div class="w3-white w3-margin w3-card-4">
+                    <h4 class="w3-blue">Prashant Joshi</h4>
+                    <img src="/static/img/card.jpg" alt="Prashant" style="width:100%" class="w3-grayscale">
+                    <div class="w3-container">
+
+                        <p>This is my first web application developed using google-app-engine. Feel free to use it.</p>
+                        <p>In the following days, I'll be posting few articles that explain how did I develop this web-site using <spand class="w3-text-red">Google App Engine (GAE)</spand>.</p>
+                        <p>Stay Tuned!!!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        {% if userSignedIn == "true" %}
+            <div class="w3-row w3-padding-small">
+                <div class="w3-col m10">
+                    <div class="w3-container w3-white w3-margin w3-padding-large">
+                        <form class="w3-container w3-left" method="post" action="/postdetail/{{post.key().id()}}/addcomment">
+                            <label class="w3-text-blue"><b>Write Review</b></label>
+                            <textarea rows="4" cols="110" class="w3-input w3-border" name="comment"></textarea>
+                            <br>
+                            <input type="submit" class="w3-btn w3-blue" value="Post it!">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="w3-row  w3-padding-small">
+            <div class="w3-col m10">
+                <div class="w3-container w3-white w3-margin w3-padding-medium">
+                    <table class="w3-table w3-striped w3-border">
+                    <thead>
+                        <tr>
+                            <th class="w3-blue"> What others say!</th>
+                        </tr>
+                    </thead>
+                    {% for comment in comments %}
+                        <tr>
+                            <td>
+                                <i class="fa fa-user-o w3-text-blue w3-large"></i> <label class="w3-text-blue"><b>{{comment.author}}</b></label> commented on {{comment.commented_on.strftime("%b %d, %Y")}} that:
+                            </td>
+                        </tr>
+
+                        <tr style="background-color:#ebf4fe;border-bottom: 3px solid #ddd">
+                            <td>
+                                <span id="comment-box">{{comment.comment}}</span>
+                                {% if comment.author == username%}
+                                <span id="display-comment-box" style="display:block">
+                                    <br>
+                                    <table>
+                                    <tr>
+                                    <td>
+                                        <label class="fa fa-edit w3-xxlarge w3-text-blue  w3-hover-opacity" onClick="document.getElementById('comment-box').style.display='none';document.getElementById('display-comment-box').style.display='none';document.getElementById('edit-comment-box').style.display='block';" onmouseover="this.style.cursor='pointer';"></label>
+                                    </td>
+                                    <td>
+                                        <span>
+                                        <form method="post" action="/postdetail/{{post.key().id()}}/deletecomment" id="delete-comment">
+                                            <label class="fa fa-remove w3-xxlarge w3-text-red w3-hover-opacity" onClick="document.getElementById('delete-comment').submit();" onmouseover="this.style.cursor='pointer';"></label>
+                                            <input type="hidden" name="commentid" value="{{comment.key().id()}}">
+                                        </form>
+                                        </span>
+                                    </td>
+                                    </tr>
+                                    </table>
+                                </span>
+                                <span id="edit-comment-box" style="display:none;">
+                                    <form class="w3-container w3-left" method="post" action="/postdetail/{{post.key().id()}}/editcomment">
+                                        <textarea rows="4" cols="110" class="w3-input w3-border w3-left-align" name="comment">{{comment.comment}}</textarea>
+                                        <input type="hidden" name="comment-id" value="{{comment.key().id()}}">
+                                        <br>
+                                        <input type="submit" class="w3-btn w3-blue" value="Modify!" onmouseover="this.style.cursor='pointer';">
+                                        <label class="w3-btn w3-blue" onClick="document.getElementById('edit-comment-box').style.display='none';document.getElementById('display-comment-box').style.display='block';document.getElementById('comment-box').style.display='block'" onmouseover="this.style.cursor='pointer';">Cancel</label>
+                                    </form>
+                                </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

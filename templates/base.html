@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Prashant's Multi-Author Blog Platform
+        </title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open Sans">	
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="/static/css/main.css">
+    </head>
+
+    <body style="background-color:#ebf4fe;">
+        <div class="w3-content" style="max-width:1600px">
+            <div class="w3-row  w3-padding-small">
+                <div class="w3-panel m10 w3-col w3-left">
+                    <span>
+                        <img src="/static/img/blog.png" width="3%">
+                        <span class="w3-opacity" >
+                            <b> <span style="color:blue">PRASHANT'S </span>
+                            <span style="color:#ff6600">MULTI-AUTHOR BLOG</span>
+                            <span style="color:blue">PLATFORM</span> </b>
+                        </span>
+                    </span>
+                    <input class="searchbox" type="text" name="search" placeholder="Search..">
+                </div>
+                <div class="w3-panel m2 w3-col w3-left"> 
+                    <div class="w3-bar w3-padding-xsmall">
+                        <table class="w3-blue" style="table-layout: fixed;">
+                            <tr>
+                                <td><a href="https://www.facebook.com/prashant.joshi.792303" class="w3-bar-item w3-button w3-hover-orange" target="_blank"><i class="fa fa-facebook-official"></i></a></td>
+                                <td><a href="https://plus.google.com/103441772651216235956" class="w3-bar-item w3-button w3-hover-orange" target="_blank"><i class="fa fa-google"></i></a></td>
+                                <td><a href="https://www.linkedin.com/in/prashant-joshi-1a6a707/" class="w3-bar-item w3-button w3-hover-orange" target="_blank"><i class="fa fa-linkedin"></i></a></td>
+                                <td><a href="https://www.instagram.com/prashantjoshi2383/" class="w3-bar-item w3-button w3-hover-orange" target="_blank"><i class="fa fa-instagram"></i></a></td>
+                            </tr>
+                        </table>
+                    </div>                
+                </div>
+            </div>
+
+            <div class="w3-row w3-padding-small">
+                <div class="w3-col m10 w3-left w3-bar w3-blue">
+                    <div class="w3-bar w3-blue">
+                        <a href="/" class="w3-bar-item w3-button w3-hover-orange"><i class="fa fa-home w3-large"></i> Home</a>
+                        <a href="/" class="w3-bar-item w3-button w3-hover-orange"><i class="material-icons" style="font-size:18px;">whatshot</i> Trending Now</a>
+                        <a href="/contactus" class="w3-bar-item w3-button w3-hover-orange"><i class="material-icons" style="font-size:18px;">contacts</i> Contact Me</a>
+                        {% if userSignedIn == "true" %}
+                            <div class="w3-dropdown-hover w3-right">
+                                <button class="w3-button w3-hover-orange"><i class="fa fa-user-circle"></i> My Account</button>
+                                <div class="w3-dropdown-content w3-bar-block">
+                                    <a href="/welcome" class="w3-bar-item w3-button w3-hover-orange"><i class="fa fa-align-justify"></i> My Posts</a>
+                                    <a href="/newpost" class="w3-bar-item w3-button w3-hover-orange"><i class="fa fa-pencil-square-o"></i> New Post</a>
+                                    <a href="/signout" class="w3-bar-item w3-button w3-hover-orange"><i class="fa fa-sign-out"></i> Signout</a>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="w3-right">
+                                <a href="/signin" class="w3-button w3-bar-item w3-hover-orange"><i class="fa fa-sign-in"></i> Signin</a>
+                                <a href="/signup" class="w3-button w3-bar-item w3-hover-orange"><i class="fa fa-user-plus"></i> Signup</a>
+                            </div>
+                       {% endif %}
+                    </div>
+                </div>
+
+                <div class="w3-col m2 w3-left w3-bar w3-blue">
+                    <div class="w3-bar w3-blue">
+                        <div class="w3-bar-item">
+                            {% if userSignedIn == "true" %}
+                            <i class="material-icons w3-text-center" style="font-size:18px;">verified_user</i> 
+                            Hey <b><span style="color:#ff6600">{{username}}</span></b>!!
+                            {% else %}
+                            <i class="fa fa-frown-o w3-text-center" style="font-size:18px;"></i> Not member yet!
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% block content %}
+            {% endblock %}
+
+        </div>
+    </body>
+</html>

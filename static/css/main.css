@@ -1,0 +1,26 @@
+﻿.searchbox {
+    width: 40%;
+    height:10px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 3px;
+    font-size: 13px;
+    background-color: #ebf4fe;
+    padding: 12px 20px 12px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    align:right;
+}
+
+/* When the input field gets focus, change its width to 100% */
+searchbox:focus {
+    width: 100%;
+}
+
+.post-detail {
+    margin-left:7%;
+    margin-right:7%;
+    border-style:outset;
+    border-color:#2196F3;
+    border-radius:10px 15px;
+}
